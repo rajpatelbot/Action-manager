@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
 import { MdOutlineDone } from "react-icons/md";
-import { StateInterface, TodoInterface } from "../@types/interface";
+import { StateInterface } from "../@types/interface";
 import { setTodos } from "../store/slice/BaseSlice";
 
 export const TodoLists = () => {
@@ -22,7 +22,7 @@ export const TodoLists = () => {
       <h1 className="font-semibold text-2xl pb-5">All todos</h1>
       <ul className="divide-y divide-gray-100">
         {todos.length > 0 ? (
-          todos.map((todo: TodoInterface) => (
+          todos.map((todo) => (
             <li key={todo.id} className="flex justify-between gap-x-6 py-5">
               <div className="flex gap-x-4 w-full">
                 <div className="min-w-0 flex items-center justify-between w-full">

@@ -15,7 +15,7 @@ export const TodoForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onAddTodo(todos, title, dispatch);
-    setTitle("");
+    setTitle(title);
   };
 
   return (
