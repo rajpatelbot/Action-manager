@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 import { MdOutlineDone } from "react-icons/md";
 import { StateInterface } from "../@types/interface";
 import { useTodo } from "../hook/useTodo";
