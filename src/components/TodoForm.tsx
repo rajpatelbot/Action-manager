@@ -1,12 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { StateInterface } from "../@types/interface";
-import { onAddTodo } from "../utils/todo";
+import { useTodo } from "../hook/useTodo";
 
 export const TodoForm = () => {
-  const dispatch = useDispatch();
+  const { onAddTodo } = useTodo();
   const [title, setTitle] = useState<string>("");
-  const todos = useSelector((state: StateInterface) => state.base.todos);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -14,8 +11,8 @@ export const TodoForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onAddTodo(todos, title, dispatch);
-    setTitle(title);
+    onAddTodo(title);
+    setTitle("");
   };
 
   return (

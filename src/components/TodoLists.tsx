@@ -1,21 +1,14 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
 import { MdOutlineDone } from "react-icons/md";
 import { StateInterface } from "../@types/interface";
-import { setTodos } from "../store/slice/BaseSlice";
+import { useTodo } from "../hook/useTodo";
+import { useLocalStorage } from "../hook/useLocalStorage";
 
 export const TodoLists = () => {
-  const dispatch = useDispatch();
   const todos = useSelector((state: StateInterface) => state.base.todos);
-
-  const handleCompleted = (id: number) => {
-    const foundIndex = todos.findIndex((list) => list.id === id);
-    const foundTodo = todos[foundIndex];
-    const updatedTodo = { ...foundTodo, isCompleted: true };
-    const updatedTodos = [...todos];
-    updatedTodos[foundIndex] = updatedTodo;
-    dispatch(setTodos(updatedTodos));
-  };
+  const { onIsCompleted, onDeleteTodo } = useTodo();
+  useLocalStorage("todos");
 
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-xl">
@@ -44,16 +37,22 @@ export const TodoLists = () => {
                     </span>
                   ) : (
                     <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
-                      Incompleted
+                      Incomplete
                     </span>
                   )}
                   <div className="flex items-center gap-1">
                     <MdOutlineDone
                       className="text-xl text-blue-600 cursor-pointer"
-                      onClick={() => handleCompleted(todo.id)}
+                      onClick={() => onIsCompleted(todo.id)}
                     />
-                    <AiOutlineEdit className="text-xl text-green-600 cursor-pointer" />
-                    <AiFillDelete className="text-xl text-red-600 cursor-pointer" />
+                    {/* <AiOutlineEdit
+                      className="text-xl text-green-600 cursor-pointer"
+                      onClick={() => onEditTodo(todo.id, todo.title)}
+                    /> */}
+                    <AiFillDelete
+                      className="text-xl text-red-600 cursor-pointer"
+                      onClick={() => onDeleteTodo(todo.id)}
+                    />
                   </div>
                 </div>
               </div>
