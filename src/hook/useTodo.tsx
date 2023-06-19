@@ -1,4 +1,4 @@
-import { getDate } from "../utils/getDate";
+import { getDate } from "../utils/utils";
 import {
   addTodo,
   checkTodo,
@@ -6,32 +6,47 @@ import {
   editTodo,
 } from "../store/slice/BaseSlice";
 import { useDispatch } from "react-redux";
+import { useCallback } from "react";
 
 export const useTodo = () => {
   const dispatch = useDispatch();
 
-  const onAddTodo = (title: string) => {
-    dispatch(
-      addTodo({
-        id: new Date().valueOf(),
-        title,
-        createdAt: getDate(new Date()),
-        isCompleted: false,
-      })
-    );
-  };
+  const onAddTodo = useCallback(
+    (title: string) => {
+      if (!title) return;
 
-  const onIsCompleted = (id: number) => {
-    dispatch(checkTodo(id));
-  };
+      dispatch(
+        addTodo({
+          id: new Date().valueOf(),
+          title,
+          createdAt: getDate(new Date()),
+          isCompleted: false,
+        })
+      );
+    },
+    [dispatch]
+  );
 
-  const onDeleteTodo = (id: number) => {
-    dispatch(deleteTodo(id));
-  };
+  const onIsCompleted = useCallback(
+    (id: number) => {
+      dispatch(checkTodo(id));
+    },
+    [dispatch]
+  );
 
-  const onEditTodo = (id: number, title: string) => {
-    dispatch(editTodo({ id, title }));
-  };
+  const onDeleteTodo = useCallback(
+    (id: number) => {
+      dispatch(deleteTodo(id));
+    },
+    [dispatch]
+  );
+
+  const onEditTodo = useCallback(
+    (id: number, title: string) => {
+      dispatch(editTodo({ id, title }));
+    },
+    [dispatch]
+  );
 
   return { onAddTodo, onIsCompleted, onDeleteTodo, onEditTodo };
 };

@@ -1,7 +1,7 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, memo, useCallback, useState } from "react";
 import { useTodo } from "../hook/useTodo";
 
-export const TodoForm = () => {
+export const TodoForm = memo(() => {
   const { onAddTodo } = useTodo();
   const [title, setTitle] = useState<string>("");
 
@@ -9,11 +9,11 @@ export const TodoForm = () => {
     setTitle(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onAddTodo(title);
     setTitle("");
-  };
+  }, []);
 
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -36,4 +36,4 @@ export const TodoForm = () => {
       </form>
     </div>
   );
-};
+});

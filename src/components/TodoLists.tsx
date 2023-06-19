@@ -4,18 +4,29 @@ import { MdOutlineDone } from "react-icons/md";
 import { StateInterface } from "../@types/interface";
 import { useTodo } from "../hook/useTodo";
 import { useLocalStorage } from "../hook/useLocalStorage";
+import SearchTodoForm from "./SearchTodoForm";
+import { useEffect, useState } from "react";
 
 export const TodoLists = () => {
   const todos = useSelector((state: StateInterface) => state.base.todos);
+  const [filteredTodos, setFilteredTodos] = useState(todos);
   const { onIsCompleted, onDeleteTodo } = useTodo();
   useLocalStorage("todos");
 
+  useEffect(() => {
+    setFilteredTodos(todos);
+  }, [todos]);
+
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-xl">
-      <h1 className="font-semibold text-2xl pb-5">All todos</h1>
+      <div className="flex items-center w-full justify-between">
+        <h1 className="font-semibold text-2xl">All todos</h1>
+        <SearchTodoForm setFilteredTodos={setFilteredTodos} />
+      </div>
+
       <ul className="divide-y divide-gray-100">
-        {todos.length > 0 ? (
-          todos.map((todo) => (
+        {filteredTodos.length > 0 ? (
+          filteredTodos.map((todo) => (
             <li key={todo.id} className="flex justify-between gap-x-6 py-5">
               <div className="flex gap-x-4 w-full">
                 <div className="min-w-0 flex items-center justify-between w-full">
@@ -45,10 +56,6 @@ export const TodoLists = () => {
                       className="text-xl text-blue-600 cursor-pointer"
                       onClick={() => onIsCompleted(todo.id)}
                     />
-                    {/* <AiOutlineEdit
-                      className="text-xl text-green-600 cursor-pointer"
-                      onClick={() => onEditTodo(todo.id, todo.title)}
-                    /> */}
                     <AiFillDelete
                       className="text-xl text-red-600 cursor-pointer"
                       onClick={() => onDeleteTodo(todo.id)}
