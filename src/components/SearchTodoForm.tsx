@@ -21,6 +21,7 @@ export default function SearchTodoForm({ setFilteredTodos }: any) {
       setSearch(e.target.value);
       debounce(() => getTodosData(e.target.value))();
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [search]
   );
 

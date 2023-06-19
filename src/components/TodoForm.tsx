@@ -9,11 +9,14 @@ export const TodoForm = memo(() => {
     setTitle(e.target.value);
   };
 
-  const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onAddTodo(title);
-    setTitle("");
-  }, []);
+  const handleSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      onAddTodo(title);
+      setTitle("");
+    },
+    [onAddTodo, title]
+  );
 
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
