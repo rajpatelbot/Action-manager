@@ -1,3 +1,5 @@
+import { TodoInterface } from "../@types/interface";
+
 const options: Intl.DateTimeFormatOptions = {
   weekday: "long",
   day: "numeric",
@@ -22,4 +24,15 @@ export const debounce = (callbackFn: any, delay: number = 1000) => {
       callbackFn(...args);
     }, delay);
   };
+};
+
+export const sortTodos = (selectedValue: string, todos: TodoInterface[]) => {
+  if (selectedValue === "none") return todos;
+
+  const sortedItems = todos.filter((todo) => {
+    return selectedValue === "Pending"
+      ? todo.isCompleted === false
+      : todo.isCompleted === true;
+  });
+  return sortedItems;
 };

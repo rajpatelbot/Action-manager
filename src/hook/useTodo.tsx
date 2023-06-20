@@ -7,18 +7,20 @@ import {
 } from "../store/slice/BaseSlice";
 import { useDispatch } from "react-redux";
 import { useCallback } from "react";
+import { TodoInputInterface } from "../@types/interface";
 
 export const useTodo = () => {
   const dispatch = useDispatch();
 
   const onAddTodo = useCallback(
-    (title: string) => {
-      if (!title) return;
+    ({ title, desc }: TodoInputInterface) => {
+      if (!title || !desc) return;
 
       dispatch(
         addTodo({
           id: new Date().valueOf(),
           title,
+          desc,
           createdAt: getDate(new Date()),
           isCompleted: false,
         })

@@ -1,8 +1,30 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { BaseSlice } from "./slice/BaseSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import BaseSlice from "./slice/BaseSlice";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["base"],
+  blacklist: ["table"],
+};
+
+const rootReducer = combineReducers({
+  base: BaseSlice,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    base: BaseSlice.reducer,
-  },
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST"],
+        ignoredPaths: ["register"],
+      },
+    }),
 });
+
+export const persistor = persistStore(store);

@@ -6,9 +6,8 @@ export interface BaseSliceInterface {
   todos: TodoInterface[];
 }
 
-export interface TodoInterface {
+export interface TodoInterface extends TodoInputInterface {
   id: number;
-  title: string;
   isCompleted: boolean;
   createdAt: string;
 }
@@ -16,4 +15,9 @@ export interface TodoInterface {
 export interface TodosDataInterface {
   payload: TodoInterface[];
   type: string;
+}
+
+export interface TodoInputInterface {
+  title: string;
+  desc: string;
 }

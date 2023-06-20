@@ -9,9 +9,12 @@ export default function SearchTodoForm({ setFilteredTodos }: any) {
 
   const getTodosData = (newSearch: string) => {
     const filteredTodos = todos.filter((todo) => {
-      return todo.title
-        .toLocaleLowerCase()
-        .includes(newSearch.toLocaleLowerCase());
+      return (
+        todo.title
+          .toLocaleLowerCase()
+          .includes(newSearch.toLocaleLowerCase()) ||
+        todo.desc.toLocaleLowerCase().includes(newSearch.toLocaleLowerCase())
+      );
     });
     setFilteredTodos(filteredTodos);
   };
@@ -34,7 +37,7 @@ export default function SearchTodoForm({ setFilteredTodos }: any) {
         value={search}
         placeholder="Search todo"
         onChange={handleSearchInput}
-        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        className="w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       />
     </div>
   );
