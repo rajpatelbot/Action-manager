@@ -23,7 +23,7 @@ export const SortTodo = ({ setFilteredTodos }: any) => {
       onChange={(e) => handleSelectionChange(e)}
       className="border border-gray-300 px-2 py-1 rounded-md"
     >
-      <option value="none">Select Value</option>
+      <option value="none">Select filter</option>
       {sortTypes.map((sortType, key) => (
         <option key={key} value={sortType}>
           {sortType}

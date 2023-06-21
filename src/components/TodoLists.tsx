@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { AiFillDelete } from "react-icons/ai";
 import { MdOutlineDone } from "react-icons/md";
-import { StateInterface } from "../@types/interface";
+import { SortingFields, StateInterface } from "../@types/interface";
 import { useTodo } from "../hook/useTodo";
 import SearchTodoForm from "./SearchTodoForm";
 import { useEffect, useState } from "react";
@@ -39,11 +39,11 @@ export const TodoLists = () => {
 
                 {todo.isCompleted ? (
                   <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                    Completed
+                    {SortingFields.completed}
                   </span>
                 ) : (
                   <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
-                    Pending
+                    {SortingFields.pending}
                   </span>
                 )}
               </div>

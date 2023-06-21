@@ -1,4 +1,4 @@
-import { TodoInterface } from "../@types/interface";
+import { SortingFields, TodoInterface } from "../@types/interface";
 
 const options: Intl.DateTimeFormatOptions = {
   weekday: "long",
@@ -28,11 +28,33 @@ export const debounce = (callbackFn: any, delay: number = 1000) => {
 
 export const sortTodos = (selectedValue: string, todos: TodoInterface[]) => {
   if (selectedValue === "none") return todos;
+  let sortedItems: TodoInterface[] = [];
 
-  const sortedItems = todos.filter((todo) => {
-    return selectedValue === "Pending"
-      ? todo.isCompleted === false
-      : todo.isCompleted === true;
-  });
+  if (
+    selectedValue === SortingFields.pending ||
+    selectedValue === SortingFields.completed
+  ) {
+    sortedItems = todos.filter((todo) => {
+      return selectedValue === SortingFields.pending
+        ? todo.isCompleted === false
+        : todo.isCompleted === true;
+    });
+  }
+
+  // if (selectedValue === SortingFields.asc) {
+  //   sortedItems = todos.sort((a, b) => {
+  //     let first = a.title.toLowerCase();
+  //     let second = b.title.toLowerCase();
+
+  //     if (first < second) {
+  //       return -1;
+  //     }
+  //     if (first > second) {
+  //       return 1;
+  //     }
+  //     return 0;
+  //   });
+  // }
+
   return sortedItems;
 };

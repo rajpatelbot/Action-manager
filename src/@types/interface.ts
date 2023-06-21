@@ -21,3 +21,10 @@ export interface TodoInputInterface {
   title: string;
   desc: string;
 }
+
+export enum SortingFields {
+  pending = "Pending",
+  completed = "Completed",
+  // asc = "Asc",
+  // desc = "Desc",
+}

@@ -7,17 +7,20 @@ export default function SearchTodoForm({ setFilteredTodos }: any) {
   const [search, setSearch] = useState<string>("");
   const todos = useSelector((state: StateInterface) => state.base.todos);
 
-  const getTodosData = (newSearch: string) => {
-    const filteredTodos = todos.filter((todo) => {
-      return (
-        todo.title
-          .toLocaleLowerCase()
-          .includes(newSearch.toLocaleLowerCase()) ||
-        todo.desc.toLocaleLowerCase().includes(newSearch.toLocaleLowerCase())
-      );
-    });
-    setFilteredTodos(filteredTodos);
-  };
+  const getTodosData = useCallback(
+    (newSearch: string) => {
+      const filteredTodos = todos.filter((todo) => {
+        return (
+          todo.title
+            .toLocaleLowerCase()
+            .includes(newSearch.toLocaleLowerCase()) ||
+          todo.desc.toLocaleLowerCase().includes(newSearch.toLocaleLowerCase())
+        );
+      });
+      setFilteredTodos(filteredTodos);
+    },
+    [setFilteredTodos, todos]
+  );
 
   const handleSearchInput = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
